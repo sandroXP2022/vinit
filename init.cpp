@@ -32,6 +32,23 @@ void start_udev() {
     system("udevadm settle");  // Aguarda que todos os eventos de udev sejam processados
 }
 
+void mount_filesystems() {
+    printf("Montando sistemas de arquivos básicos...\n");
+    if (mount("proc", "/proc", "proc", 0, nullptr) < 0) {
+        perror("Falha ao montar /proc");
+        exit(EXIT_FAILURE);
+    }
+    if (mount("sysfs", "/sys", "sysfs", 0, nullptr) < 0) {
+        perror("Falha ao montar /sys");
+        exit(EXIT_FAILURE);
+    }
+    if (mount("devtmpfs", "/dev", "devtmpfs", 0, nullptr) < 0) {
+        perror("Falha ao montar /dev");
+        exit(EXIT_FAILURE);
+    }
+}
+
+
 // Função para iniciar um serviço com variáveis de ambiente
 void start_service(const std::string &service, const std::map<std::string, std::string> &env_vars) {
     pid_t pid = fork();
@@ -87,6 +104,8 @@ int main() {
 
     // Inicializa o udev
     start_udev();
+    
+    mount_filesystems();
 
     // Inicia outros serviços configurados
     parse_and_start_services();
