@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <sys/mount.h>
 
 #define CONFIG_FILE "/etc/init"
 
