@@ -103,17 +103,17 @@ void parse_and_start_services() {
 int main() {
     printf("Custom init process started.\n");
 
+    mount_filesystems();
+
     // Inicializa o udev
     start_udev();
     
-    mount_filesystems();
-
     // Inicia outros serviços configurados
     parse_and_start_services();
 
     // Manter o processo init ativo e gerenciar serviços
     while (1) {
-        sleep(60);  // Espera para evitar o uso excessivo da CPU
+        sleep(30);  // Espera para evitar o uso excessivo da CPU
     }
 
     return 0;
