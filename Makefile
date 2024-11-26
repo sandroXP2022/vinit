@@ -29,3 +29,8 @@ $(TARGET_SUSPEND): suspend.cpp
 clean:
 	rm -f $(TARGET_INIT) $(TARGET_HALT) $(TARGET_REBOOT) $(TARGET_SUSPEND)
 
+install:
+	mv -v {init,halt,suspend,reboot} /usr/sbin
+
+remove:
+	rm -fr /usr/sbin/{init,halt,suspend,reboot}
